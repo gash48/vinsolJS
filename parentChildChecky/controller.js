@@ -35,13 +35,16 @@ const checkMethods = {
         })
     },
     parentCheckChange : function(e) {
+        let listId = e.target.value + 'list';
+        let doc = document;
         if (e.target.checked) {
-            document.getElementById(e.target.value + 'list').style.display = 'block';
+            doc.getElementById(listId).style.display = 'block';
             this.changeCheck(checkStructure[e.target.value], true);
         } else {
-            document.getElementById(e.target.value + 'list').style.display = 'none';
+            doc.getElementById(e.target.value + 'list').style.display = 'none';
             this.changeCheck(checkStructure[e.target.value], false);
         }
+        doc.getElementById(listId).scrollIntoView();
     }
 }
 
