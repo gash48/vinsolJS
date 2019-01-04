@@ -1,69 +1,67 @@
-let currentChecks = [];
-const checks = ['Sunday', 'Monday', 'Wednesday', 'Thursday', 'Tuesday', 'Friday', 'Saturday', 'none'];
+class ChUtil {
+    constructor(){
 
-function checkChangers(e) {
-    if (e.target.checked) {
-        if (e.target.value == 'none') {
-            allChecksOff();
-            currentChecks = [];
-            setElementCheck('none', true);
-        } else {
-            setElementCheck('none', false);
-            if (currentChecks.length == 3) {
-                setElementCheck(e.target.value, false);
-                alert('Only 3 days can be selected. You have already selected ' + currentChecks.join(', '))
-            } else {
-                currentChecks.push(e.target.value);
-            }
-        }
-    } else {
-        if (e.target.value != 'none') {
-            currentChecks = currentChecks.filter(((ele) => ele != e.target.value))
-            setElementCheck('none',false);
-        }
+    }
+
+    allChecksOff(checks) {
+        checks.map((ele) => {
+            this.setElementCheck(ele, false);
+        })
+        return [];
+    }
+
+    addEvents(checks, checkBoxHandler) {
+        let doc = document;
+        checks.map((ele) => {
+            doc.getElementById(ele).addEventListener('click', checkBoxHandler, false);
+        })
+    }
+
+    setElementCheck(id, val) {
+        document.getElementById(id).checked = val;
     }
 }
 
-function allChecksOff() {
-    checks.map((ele) => {
-        setElementCheck(ele,false);
-    })
+class CheckBox extends ChUtil {
+    constructor() {
+        super();
+        this.defaultChecks = ['Sunday', 'Monday', 'Wednesday', 'Thursday', 'Tuesday', 'Friday', 'Saturday', 'none'];
+        this.currentChecks = [];
+    }
+
+    checkChangers(e) {
+        let {value, checked} = e.target;
+        if (checked) {
+            if (value == 'none') {
+               this.currentChecks = this.allChecksOff(this.defaultChecks);
+            } else {
+                if (this.currentChecks.length == 3) {
+                    e.preventDefault();
+                    alert('Only 3 days can be selected. You have already selected ' + this.currentChecks.join(', '))
+                } else {
+                    this.currentChecks.push(value);
+                }
+            }
+            this.setElementCheck('none', value == 'none')
+        } else {
+            if (value != 'none') {
+                this.currentChecks = this.currentChecks.filter(((ele) => ele != value))
+                this.setElementCheck('none', false);
+            }
+        }
+    }
+
+    initChecks() {
+        let listElement = ``;
+        this.defaultChecks.map((ele) => {
+            listElement += `<li class="checkbox"><label for=${ele}><input type="checkbox" style="margin-right:10px" id=${ele} value=${ele} /> ${ele}</label></li>`
+        })
+        document.getElementById('customList').innerHTML = listElement;
+        // Add Event Handlers
+        this.addEvents(this.defaultChecks,(e) => this.checkChangers(e));
+    }
 }
 
-function addEvents() {
-    checks.map((ele) => {
-        document.getElementById(ele).addEventListener('change', checkChangers, false);
-    })
-}
-
-function setElementCheck(id, val){
-    document.getElementById(id).checked = val;
-}
-
-function initChecks() {
-
-    checks.map((ele) => {
-        var customLi = document.createElement('li');
-        customLi.className = 'checkbox';
-
-        var label = document.createElement('label');
-        label.setAttribute('for', ele);
-
-        var checkbox = document.createElement('input');
-        checkbox.style.marginRight = '10px';
-        checkbox.type = 'checkbox';
-        checkbox.id = ele;
-        checkbox.value = ele;
-
-        label.appendChild(checkbox);
-        label.innerHTML += ele;
-        customLi.appendChild(label);
-        document.getElementById('customList').appendChild(customLi);
-    })
-
-    addEvents();
-}
-
-
-
-initChecks();
+(function(){
+    new CheckBox().initChecks();
+})();
