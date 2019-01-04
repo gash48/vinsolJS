@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <title>Form Validation</title>
+
+    <style>
+        .card {
+            width: 50%;
+            font: bold 12px/30px Georgia, serif;
+            margin: auto;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <noscript>You need to enable JavaScript to run this Page.</noscript>
+
+    <form>
+        <div class="card">
+            <div class="card-header">Header</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 col-xs-4">Login Id</div>
+                    <div class="col-md-8 col-xs-8"><input type="text" name="loginId" class="form-control" /></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-xs-4">Email</div>
+                    <div class="col-md-8 col-xs-8"><input type="email" name="email" class="form-control" /></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-xs-4">Name</div>
+                    <div class="col-md-8 col-xs-8"><input type="text" name="name" class="form-control" /></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-xs-4">HomePage</div>
+                    <div class="col-md-8 col-xs-8"><input type="text" name="homepage" class="form-control" /></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-xs-12">About</div>
+                    <div class="col-md-12 col-xs-12">
+                        <textarea cols="20" rows="10" name="about" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-xs-12">
+                        <label for="notificationCheck">
+                            <input id="notificationCheck" type="checkbox" name="check" class="form-control" />
+                            Receive notification of comments
+                        </label>
+                    </div>
+                    <div class="col-md-12 col-xs-12">
+                        You will be notified via an email when someone posts comment on your blog
+                    </div>
+                    <div class="col-md-12 col-xs-12">
+                        Your password will be mailed to you
+                    </div>
+                    <div class="col-md-12 col-xs-12">
+                        <button type="button" class="btn btn-info">Go</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- <script src="./checkJs.js"></script> -->
+</body>
+
+</html>
