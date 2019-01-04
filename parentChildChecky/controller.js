@@ -1,58 +1,55 @@
 const DOMSelectors = {
-  containerSelector: 'container'
-}
+  containerSelector: 'container',
+};
 
-const checkBoxJson = {
+const checkBoxValuesJson = {
   color: ['red', 'green', 'yellow', 'blue'],
   drinks: ['coke', 'pepsi', 'dew'],
   movies: ['adhm', 'detachment'],
-  bikes: ['harley', 'yamaha', 'r15']
-}
+  bikes: ['harley', 'yamaha', 'r15'],
+};
 
 const checkBoxController = {
-  initParentCheckboxes: function () {
-    var element = ``;
-    Object.keys(checkBoxJson).map((ele) => {
-      element += `<div class="checkbox"><label for=${ele}><input type="checkbox" id=${ele} value=${ele} /> ${ele}</label></div>${this.initChildCheckBoxes(ele)}`
-    })
+  initParentCheckboxes() {
+    let element = '';
+    Object.keys(checkBoxValuesJson).map((ele) => {
+      element += `<div class="checkbox"><label for=${ele}><input type="checkbox" id=${ele} value=${ele} /> ${ele}</label></div>${this.initChildCheckBoxes(ele)}`;
+      return null;
+    });
     document.getElementById(DOMSelectors.containerSelector).innerHTML = element;
 
     // Adds Parent Checkboxes Event Listeners
     this.initParentEventListeners();
   },
-  changeAllChildCheckboxes: function (ids, val) {
-    var doc = document;
-    ids.map(ele => {
+  switchChildCheckboxes(ids, val) {
+    const doc = document;
+    ids.map((ele) => {
       doc.getElementById(ele).checked = val;
-    })
+      return null;
+    });
   },
-  initChildCheckBoxes: function (prop) {
-    var childElement = ``;
-    checkBoxJson[prop].map((ele) => {
-      childElement += `<li><label for=${ele}><input type="checkbox" id=${ele} value=${ele} /> ${ele}</label></li>`
-    })
-    return `<ul id=${prop + 'List'} class="childList">${childElement}</ul>`
+  initChildCheckBoxes(prop) {
+    let childElement = '';
+    checkBoxValuesJson[prop].map((ele) => {
+      childElement += `<li><label for=${ele}><input type="checkbox" id=${ele} value=${ele} /> ${ele}</label></li>`;
+      return null;
+    });
+    return `<ul id="${prop}List" class="childList">${childElement}</ul>`;
   },
-  initParentEventListeners: function () {
-    Object.keys(checkBoxJson).map(() => {
-      document.addEventListener('click', (e) => this.parentCheckboxHandler(e), false);
-    })
+  initParentEventListeners() {
+    Object.keys(checkBoxValuesJson).map(() => {
+      document.addEventListener('click', e => this.parentCheckboxHandler(e), false);
+      return null;
+    });
   },
-  parentCheckboxHandler: function (e) {
-    let { checked, value } = e.target;
-    let listId = value + 'List';
-    let doc = document;
-    if (checked) {
-      doc.getElementById(listId).style.display = 'block';
-      this.changeAllChildCheckboxes(checkBoxJson[value], true);
-    } else {
-      doc.getElementById(listId).style.display = 'none';
-      this.changeAllChildCheckboxes(checkBoxJson[value], false);
-    }
-    doc.getElementById(listId).scrollIntoView();
-  }
-}
+  parentCheckboxHandler(e) {
+    const { checked, value } = e.target;
+    const doc = document;
+    const listId = `${value}List`;
+    doc.getElementById(listId).style.display = checked ? 'block' : 'none';
+    this.switchChildCheckboxes(checkBoxValuesJson[value], checked);
+    doc.getElementById(listId).scrollIntoView(false);
+  },
+};
 
-  (function () {
-    checkBoxController.initParentCheckboxes();
-  })();
+checkBoxController.initParentCheckboxes();
