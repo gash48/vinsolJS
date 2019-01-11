@@ -1,0 +1,17 @@
+.card {
+    width: 50%;
+    font: bold 12px/30px Georgia, serif;
+    margin: auto;
+    text-align: center;
+}
+#notificationContainer{
+    padding: 10px 20px;
+    text-align: left;
+}
+input[type=checkbox]{
+    display: inline-block;
+    width: 25px;
+}
+.formInfo{
+    font-size: 10px;
+}
