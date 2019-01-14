@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable one-var-declaration-per-line */
 /* eslint-disable one-var */
 /* eslint-disable no-trailing-spaces */
@@ -31,14 +32,14 @@ class CheckBoxController {
 
   initParentCheckboxes() {
     const tempDocFragment = document.createDocumentFragment();
-    Object.keys(this.checkBoxValues).map((ele) => {
-      const checkBoxContainer = this.createSetElement('div', { 'class': 'checkbox' }), label = this.createSetElement('label', { 'for': ele }, ele),
-        checkBox = this.createSetElement('input', { 'type': 'checkbox', 'id': ele, 'value': ele, class: this.DOMSelectors.checkBoxClass });
+    for (const category of Object.keys(this.checkBoxValues)) {
+      const checkBoxContainer = this.createSetElement('div', { 'class': 'checkbox' }), label = this.createSetElement('label', { 'for': category }, category),
+        checkBox = this.createSetElement('input', { 'type': 'checkbox', 'id': category, 'value': category, class: this.DOMSelectors.checkBoxClass });
 
       checkBoxContainer.appendChild(label).appendChild(checkBox);
-      checkBoxContainer.appendChild(this.initChildCheckBoxes(ele));
+      checkBoxContainer.appendChild(this.initChildCheckBoxes(category));
       tempDocFragment.appendChild(checkBoxContainer);
-    });
+    }
     document.getElementById(DOMSelectors.containerSelector).appendChild(tempDocFragment);
 
     // Adds Parent Checkboxes Event Listeners
@@ -53,13 +54,13 @@ class CheckBoxController {
 
   initChildCheckBoxes(prop) {
     const tempDocFragment = document.createDocumentFragment(), listHead = this.createSetElement('ul', { 'id': `${prop}List`, 'class': this.DOMSelectors.childCheckBoxesList });
-    this.checkBoxValues[prop].map((ele) => {
+    for (const propValues of this.checkBoxValues[prop]) {
       const childList = this.createSetElement('li');
-      const label = this.createSetElement('label', { 'for': ele }, ele);
-      const checkBox = this.createSetElement('input', { 'type': 'checkbox', class: this.DOMSelectors.checkBoxClass, 'id': ele, 'value': ele });
+      const label = this.createSetElement('label', { 'for': propValues }, propValues);
+      const checkBox = this.createSetElement('input', { 'type': 'checkbox', class: this.DOMSelectors.checkBoxClass, 'id': propValues, 'value': propValues });
       childList.appendChild(label).appendChild(checkBox);
       tempDocFragment.appendChild(childList);
-    });
+    }
     listHead.appendChild(tempDocFragment);
     return listHead;
   }
