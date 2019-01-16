@@ -9,8 +9,9 @@ class ImPromptu {
 
   askForPrompt(message) {
     const promptPopup = prompt(message);
-    if (promptPopup) {
-      return promptPopup;
+    const inputData = promptPopup && promptPopup.trim();
+    if (inputData) {
+      return inputData;
     }
     this.askForPrompt(message);
   }

@@ -1,3 +1,6 @@
+/* eslint-disable indent */
+/* eslint-disable object-property-newline */
+/* eslint-disable key-spacing */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable one-var-declaration-per-line */
 /* eslint-disable one-var */
@@ -33,8 +36,12 @@ class CheckBoxController {
   initParentCheckboxes() {
     const tempDocFragment = document.createDocumentFragment();
     for (const category of Object.keys(this.checkBoxValues)) {
-      const checkBoxContainer = this.createSetElement('div', { 'class': 'checkbox' }), label = this.createSetElement('label', { 'for': category }, category),
-        checkBox = this.createSetElement('input', { 'type': 'checkbox', 'id': category, 'value': category, class: this.DOMSelectors.checkBoxClass });
+      const checkBoxContainer = this.createSetElement('div', { 'class': 'checkbox' }),
+        label = this.createSetElement('label', { 'for': category }, category),
+        checkBox = this.createSetElement('input', {
+          type: 'checkbox', id: category,
+          value: category, class: this.DOMSelectors.checkBoxClass,
+        });
 
       checkBoxContainer.appendChild(label).appendChild(checkBox);
       checkBoxContainer.appendChild(this.initChildCheckBoxes(category));
@@ -53,11 +60,15 @@ class CheckBoxController {
   }
 
   initChildCheckBoxes(prop) {
-    const tempDocFragment = document.createDocumentFragment(), listHead = this.createSetElement('ul', { 'id': `${prop}List`, 'class': this.DOMSelectors.childCheckBoxesList });
+    const tempDocFragment = document.createDocumentFragment(),
+      listHead = this.createSetElement('ul', { 'id': `${prop}List`, 'class': this.DOMSelectors.childCheckBoxesList });
     for (const propValues of this.checkBoxValues[prop]) {
-      const childList = this.createSetElement('li');
-      const label = this.createSetElement('label', { 'for': propValues }, propValues);
-      const checkBox = this.createSetElement('input', { 'type': 'checkbox', class: this.DOMSelectors.checkBoxClass, 'id': propValues, 'value': propValues });
+      const childList = this.createSetElement('li'),
+        label = this.createSetElement('label', { 'for': propValues }, propValues),
+        checkBox = this.createSetElement('input', {
+          type: 'checkbox',
+          class: this.DOMSelectors.checkBoxClass, id: propValues, value: propValues,
+        });
       childList.appendChild(label).appendChild(checkBox);
       tempDocFragment.appendChild(childList);
     }
@@ -81,10 +92,15 @@ class CheckBoxController {
   }
 
   parentCheckboxHandler(e) {
-    const { checked, value } = e.target, listId = `${value}List`;
-    document.getElementById(listId).style.display = checked ? 'block' : 'none';
-    this.switchChildCheckboxes(this.checkBoxValues[value], checked);
-    document.getElementById(listId).scrollIntoView(false);
+    const { checked, value } = e.target,
+      listId = `${value}List`,
+      parentElement = document.getElementById(listId);
+
+    if (parentElement) {
+      parentElement.style.display = checked ? 'block' : 'none';
+      this.switchChildCheckboxes(this.checkBoxValues[value], checked);
+      parentElement.scrollIntoView(false);
+    }
   }
 }
 
